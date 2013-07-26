@@ -1,4 +1,4 @@
 Intel-ML-internship
 ===================
 
-An attempt to create an automatic Analyzer for online reviews, using machine learning.
+This project aims at creating an automated systems for analizing online user reviews using machine learning techniques. The target is to generate recommendations based on user trends and sentiments
