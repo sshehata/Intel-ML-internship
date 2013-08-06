@@ -34,19 +34,6 @@ public class FileParser {
 		Collections.shuffle(trainingSet);
 		Collections.shuffle(testingSet);
 	}
-	
-	public void cleanTrainingData(){
-		
-	}
-
-	public void clean(File file) {
-		try {
-			String cleanedFile = "";
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
 
 	public ArrayList<File> getTrainingSet() {
 		return trainingSet;
