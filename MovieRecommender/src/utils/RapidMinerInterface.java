@@ -23,12 +23,6 @@ public class RapidMinerInterface {
 		try {
 			cleaingingTrainingData = new Process(new File(
 					"cleaning_training_data.xml"));
-			cleaingingTrainingData.getRootOperator().setParameter(
-					ProcessRootOperator.PARAMETER_LOGFILE,
-					"cleaning_training_data.log");
-			cleaingingTrainingData.getRootOperator().setParameter(
-					ProcessRootOperator.PARAMETER_LOGVERBOSITY,
-					"all");
 			return cleaingingTrainingData.run();
 		} catch (IOException e) {
 			System.out.println(e);

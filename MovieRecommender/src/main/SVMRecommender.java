@@ -1,18 +1,14 @@
 package main;
 
-import com.rapidminer.operator.IOContainer;
-import com.rapidminer.operator.IOObject;
-
+import com.rapidminer.example.set.SimpleExampleSet;
 import utils.RapidMinerInterface;
-import jnisvmlight.SVMLightInterface;
 
 public class SVMRecommender {
-	public static void main(String...args){
-		SVMLightInterface trainer = new SVMLightInterface();
+	public static void main(String... args) {
 		RapidMinerInterface rapidminer = new RapidMinerInterface();
-		IOContainer output = rapidminer.cleanTrainingData();
-		for (IOObject obj : output.asList()){
-			System.out.println(obj);
-		}
+		SimpleExampleSet cleanedData = (SimpleExampleSet) rapidminer
+				.cleanTrainingData().getIOObjects()[0];
+		SVMModel model = new SVMModel(cleanedData.size());
+		model.train(cleanedData);
 	}
 }
