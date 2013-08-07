@@ -6,4 +6,5 @@ This project aims at creating an automated systems for analizing online user rev
 <ul>
   <li> <a href="https://github.com/sshihata/Intel-ML-internship/wiki" >Home</a></li>
   <li> <a href="https://github.com/sshihata/Intel-ML-internship/wiki/Installing Mahout" >Installing Mahout</a> </li>
+  <li> <a href="https://github.com/sshihata/Intel-ML-internship/wiki/Running-Movie-Recommender" >Running Movie Recommender</a> </li>
 </ul>
