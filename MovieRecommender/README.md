@@ -1,3 +1,4 @@
+## Movie Recommender
 In order to run the MovieRecommender project in **Eclipse**, download the following dependencies<br>
 #### JNI_SVMLight
 A java impementation to the SVM light library. <br>
