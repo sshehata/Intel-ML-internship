@@ -1,7 +1,13 @@
+/**
+ * This class represents an SVM model.
+ * @author Samy Shihata
+ */
+
 package models;
 
 import java.io.File;
 import java.util.ArrayList;
+
 import utils.RapidMinerInterface;
 import com.rapidminer.example.Attribute;
 import com.rapidminer.example.Attributes;
@@ -46,10 +52,10 @@ public class SVMModel implements Runnable {
 		TrainingParameters tp = new TrainingParameters();
 		tp.getLearningParameters().verbosity = 1;
 		model = trainer.trainModel(trainingData, tp);
-		
-		//Very expensive, crashes my laptop.
-		//Thread writingThread = new Thread(this);
-		//writingThread.start();
+
+		// Very expensive, crashes my laptop.
+		// Thread writingThread = new Thread(this);
+		// 5writingThread.start();
 
 		System.out.print("done.\n");
 	}
@@ -98,6 +104,11 @@ public class SVMModel implements Runnable {
 			files.add(file);
 		}
 		return files;
+	}
+
+	public double classify(Example example) {
+		LabeledFeatureVector vector = createVector(example, 0.0);
+		return model.classify(vector);
 	}
 
 	// Background method to write the model to a file

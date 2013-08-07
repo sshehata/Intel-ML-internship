@@ -1,3 +1,8 @@
+/**
+ * An interface to the RapidMiner API.
+ * @author Samy Shihata
+ */
+
 package utils;
 
 import java.io.File;
