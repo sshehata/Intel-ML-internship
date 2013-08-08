@@ -23,4 +23,9 @@ Extend _jnisvmlight.jar_ -> _Native Library Location_ -> _Edit_
 
 ***
 #### Running
+Change the path in the following two parameters to reflect the absolute paths to the training set pos and neg directories<br>
+`<list key="text_directories">`<br>
+          `<parameter key="pos" value="/home/sshihata/Development/workspace/Intel-ML-internship/MovieRecommender/training set/pos"/>`<br>
+          `<parameter key="neg" value="/home/sshihata/Development/workspace/Intel-ML-internship/MovieRecommender/training set/neg"/>`<br>
+ `</list>`<br>
 Run **SVMRecommender.java** for the SVM based implementation.
