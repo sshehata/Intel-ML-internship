@@ -1,16 +1,14 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 
+@SuppressWarnings("serial")
 public class LogPanel extends JPanel {
 	private JTextArea log;
 

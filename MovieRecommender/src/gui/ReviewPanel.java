@@ -7,12 +7,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-
-import javax.swing.JEditorPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
@@ -21,9 +17,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
-import org.apache.pdfbox.encryption.DocumentEncryption;
-import org.apache.poi.hslf.dev.TextStyleListing;
-
+@SuppressWarnings("serial")
 public class ReviewPanel extends JPanel {
 
 	private StyledDocument reviewDoc;
@@ -62,17 +56,29 @@ public class ReviewPanel extends JPanel {
 				reviewPane.setCaretPosition(reviewDoc.getLength());
 				line = reader.readLine();
 			}
-			reviewDoc.insertString(reviewDoc.getLength(), "\n#################END OF REVIEW##############\n\n",
+			reviewDoc.insertString(reviewDoc.getLength(),
+					"\n#################END OF REVIEW##############\n\n",
 					currentSet);
 			reviewPane.setCaretPosition(reviewDoc.getLength());
 			reader.close();
 		} catch (BadLocationException | IOException e) {
 			System.out.println(e);
 		}
+	}
 
+	public void appendReview(String review, boolean pos) {
+		try {
+			SimpleAttributeSet currentSet = (pos) ? posReview : negReview;
+			reviewDoc.insertString(reviewDoc.getLength(), review
+					+ "\n\n#################END OF REVIEW##############\n\n",
+					currentSet);
+			reviewPane.setCaretPosition(reviewDoc.getLength());
+		} catch (BadLocationException e) {
+			System.out.println(e);
+		}
 	}
 
 	public void clear() {
-		
+		reviewPane.setText("");
 	}
 }

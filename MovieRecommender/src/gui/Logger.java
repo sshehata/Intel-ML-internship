@@ -1,11 +1,9 @@
 package gui;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.OutputStream;
-
 import javax.swing.SwingUtilities;
 
 public class Logger {
@@ -31,12 +29,15 @@ public class Logger {
 		logPanel.appendLine("\n");
 	}
 
-	public void updateStats(boolean pos) {
-		statPanel.updateState(pos);
+	public void logReview(String review, boolean pos) {
+		reviewPanel.appendReview(review, pos);
+		logPanel.appendLine("Review from Text classified as "
+				+ ((pos) ? "positive" : "negative"));
+		logPanel.appendLine("\n");
 	}
 
-	public void log(String line) {
-		logPanel.appendLine(line);
+	public void updateStats(boolean pos) {
+		statPanel.updateState(pos);
 	}
 
 	public void clearReviewPane() {

@@ -100,11 +100,11 @@ public class SVMModel implements Runnable {
 
 	private ArrayList<File> loadFiles() {
 		ArrayList<File> files = new ArrayList<>();
-		File base = new File("testing set/pos");
+		File base = new File("resources/testing set/pos");
 		for (File file : base.listFiles()) {
 			files.add(file);
 		}
-		base = new File("testing set/neg");
+		base = new File("resources/testing set/neg");
 		for (File file : base.listFiles()) {
 			files.add(file);
 		}
