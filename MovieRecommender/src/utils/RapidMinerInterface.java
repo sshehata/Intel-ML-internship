@@ -7,6 +7,8 @@ package utils;
 
 import java.io.File;
 import java.io.IOException;
+
+import gui.Logger;
 import com.rapidminer.Process;
 import com.rapidminer.RapidMiner;
 import com.rapidminer.example.Example;
@@ -23,15 +25,21 @@ public class RapidMinerInterface {
 
 	private Process cleaingingTrainingData;
 	private WordList wordList;
+	private Logger logger;
 	private Process cleaningFile;
+	private Process cleaningText;
 
-	public RapidMinerInterface() {
+	public RapidMinerInterface(Logger logger, String trainingDataConfig,
+			String classifyConfig, String classifyTextConfig) {
+		this.logger = logger;
 		RapidMiner.init();
 		try {
-			cleaingingTrainingData = new Process(new File(
-					"cleaning_training_data.xml"));
-			cleaningFile = new Process(new File("cleaning_file.xml"));
+			cleaingingTrainingData = new Process(new File(trainingDataConfig));
+			cleaningFile = new Process(new File(classifyConfig));
 			cleaningFile.getRootOperator().setParameter(
+					ProcessRootOperator.PARAMETER_LOGVERBOSITY, "off");
+			cleaningMultiReviewFile = new Process(new File(classifyTextConfig));
+			cleaningText.getRootOperator().setParameter(
 					ProcessRootOperator.PARAMETER_LOGVERBOSITY, "off");
 		} catch (IOException | XMLException e) {
 			System.out.println(e);
@@ -53,6 +61,21 @@ public class RapidMinerInterface {
 		try {
 			IOContainer input = new IOContainer(new IOObject[] { wordList,
 					new SimpleFileObject(file) });
+			IOContainer output = cleaningFile.run(input);
+			return ((SimpleExampleSet) output.getElementAt(0)).getExample(0);
+		} catch (OperatorException e) {
+			System.out.println(e);
+			return null;
+		}
+	}
+
+	public WordList getWordList() {
+		return wordList;
+	}
+
+	public void cleanMultiReviewFile(File selectedFile) {
+		try {
+			IOContainer input = new IOContainer(new IOObject[] { wordList });
 			IOContainer output = cleaningFile.run(input);
 			return ((SimpleExampleSet) output.getElementAt(0)).getExample(0);
 		} catch (OperatorException e) {

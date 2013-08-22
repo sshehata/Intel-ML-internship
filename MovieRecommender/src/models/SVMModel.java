@@ -5,10 +5,13 @@
 
 package models;
 
+import gui.Logger;
+
 import java.io.File;
 import java.util.ArrayList;
 
 import utils.RapidMinerInterface;
+
 import com.rapidminer.example.Attribute;
 import com.rapidminer.example.Attributes;
 import com.rapidminer.example.Example;
@@ -22,10 +25,12 @@ public class SVMModel implements Runnable {
 
 	private SVMLightInterface trainer;
 	private SVMLightModel model;
+	private Logger logger;
 
-	public SVMModel(int trainingSetSize) {
+	public SVMModel(Logger logger) {
 		trainer = new SVMLightInterface();
 		SVMLightInterface.SORT_INPUT_VECTORS = true;
+		this.logger = logger;
 	}
 
 	public void train(SimpleExampleSet cleanedData) {
@@ -74,7 +79,7 @@ public class SVMModel implements Runnable {
 			if ((result > 0 && label > 0) || (result < 0 && label < 0)) {
 				percentage++;
 			}
-			System.out.print(".");
+			logger.logReview(file, result > 0);
 		}
 		System.out.print("done. (" + testingFiles.size() + " examples)\n");
 		System.out.println("   -- Accuracy ~= " + percentage
