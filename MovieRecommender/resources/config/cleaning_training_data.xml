@@ -15,8 +15,8 @@
     <process expanded="true">
       <operator activated="true" class="text:process_document_from_file" compatibility="5.3.001" expanded="true" height="76" name="Process Documents from Files" width="90" x="45" y="30">
         <list key="text_directories">
-          <parameter key="pos" value="/home/sshihata/Development/workspace/Intel-ML-internship/MovieRecommender/training set/pos"/>
-          <parameter key="neg" value="/home/sshihata/Development/workspace/Intel-ML-internship/MovieRecommender/training set/neg"/>
+          <parameter key="pos" value="resources/training set/pos"/>
+          <parameter key="neg" value="resources/training set/neg"/>
         </list>
         <parameter key="file_pattern" value="*"/>
         <parameter key="extract_text_only" value="true"/>
@@ -24,10 +24,10 @@
         <parameter key="content_type" value="txt"/>
         <parameter key="encoding" value="SYSTEM"/>
         <parameter key="create_word_vector" value="true"/>
-        <parameter key="vector_creation" value="Binary Term Occurrences"/>
+        <parameter key="vector_creation" value="Term Occurrences"/>
         <parameter key="add_meta_information" value="true"/>
         <parameter key="keep_text" value="false"/>
-        <parameter key="prune_method" value="absolute"/>
+        <parameter key="prune_method" value="none"/>
         <parameter key="prune_below_percent" value="3.0"/>
         <parameter key="prune_above_percent" value="30.0"/>
         <parameter key="prune_below_absolute" value="4"/>
