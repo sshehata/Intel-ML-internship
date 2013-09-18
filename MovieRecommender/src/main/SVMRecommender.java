@@ -11,14 +11,18 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+
 import models.SVMModel;
+import utils.FileParser;
 import utils.RapidMinerInterface;
+
 import com.rapidminer.example.set.SimpleExampleSet;
 
 public class SVMRecommender {
 	private static SVMModel model;
 	private static RapidMinerInterface rapidminer;
 	private static Frame frame;
+	private static FileParser fileParser;
 
 	public static void main(String... args) {
 		init();
@@ -29,10 +33,14 @@ public class SVMRecommender {
 		rapidminer = new RapidMinerInterface(frame.getLogger(),
 				"resources/config/cleaning_training_data.xml", "resources/config/cleaning_file.xml",
 				"resources/config/cleaning_text.xml");
+		fileParser = new FileParser();
+		fileParser.parseTrainingData();
+		fileParser.parseTestingData();
 		SimpleExampleSet cleanedData = rapidminer.cleanTrainingData();
 		model = new SVMModel(frame.getLogger());
 		model.train(cleanedData);
 		model.evaluate(rapidminer);
+		close();
 	}
 
 	public static void classify(File review) {
@@ -64,5 +72,10 @@ public class SVMRecommender {
 		} catch (IOException e) {
 			System.out.println(e);
 		}
+	}
+	
+	private static void close(){
+		
+		fileParser.close();
 	}
 }
