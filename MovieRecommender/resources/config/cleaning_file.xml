@@ -21,7 +21,7 @@
       </operator>
       <operator activated="true" class="text:process_documents" compatibility="5.3.001" expanded="true" height="94" name="Process Documents" width="90" x="246" y="30">
         <parameter key="create_word_vector" value="true"/>
-        <parameter key="vector_creation" value="Term Occurrences"/>
+        <parameter key="vector_creation" value="Binary Term Occurrences"/>
         <parameter key="add_meta_information" value="false"/>
         <parameter key="keep_text" value="false"/>
         <parameter key="prune_method" value="none"/>
