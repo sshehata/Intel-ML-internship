@@ -15,8 +15,8 @@
     <process expanded="true">
       <operator activated="true" class="text:process_document_from_file" compatibility="5.3.001" expanded="true" height="76" name="Process Documents from Files" width="90" x="45" y="30">
         <list key="text_directories">
-          <parameter key="pos" value="resources/training set/pos"/>
-          <parameter key="neg" value="resources/training set/neg"/>
+          <parameter key="pos" value="resources/temp/training set/pos"/>
+          <parameter key="neg" value="resources/temp/training set/neg"/>
         </list>
         <parameter key="file_pattern" value="*"/>
         <parameter key="extract_text_only" value="true"/>

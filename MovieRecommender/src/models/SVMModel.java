@@ -9,6 +9,10 @@ import gui.Logger;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.lucene.util.ArrayUtil;
 
 import utils.RapidMinerInterface;
 
@@ -16,6 +20,8 @@ import com.rapidminer.example.Attribute;
 import com.rapidminer.example.Attributes;
 import com.rapidminer.example.Example;
 import com.rapidminer.example.set.SimpleExampleSet;
+import com.rapidminer.operator.learner.functions.kernel.jmysvm.svm.SVMInterface;
+
 import jnisvmlight.LabeledFeatureVector;
 import jnisvmlight.SVMLightInterface;
 import jnisvmlight.SVMLightModel;
@@ -100,14 +106,15 @@ public class SVMModel implements Runnable {
 
 	private ArrayList<File> loadFiles() {
 		ArrayList<File> files = new ArrayList<>();
-		File base = new File("resources/testing set/pos");
+		File base = new File("resources/temp/testing set/pos");
 		for (File file : base.listFiles()) {
 			files.add(file);
 		}
-		base = new File("resources/testing set/neg");
+		base = new File("resources/temp/testing set/neg");
 		for (File file : base.listFiles()) {
 			files.add(file);
 		}
+		Collections.shuffle(files);
 		return files;
 	}
 
