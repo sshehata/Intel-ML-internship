@@ -16,6 +16,11 @@ import edu.uci.ics.jung.algorithms.shortestpath.BFSDistanceLabeler;
 
 public class FileParser {
 	private boolean negate;
+	private POSTagger tagger;
+	
+	public FileParser(){
+		tagger = new POSTagger();
+	}
 
 	public void parseTrainingData() {
 		File baseDir = new File("resources/training set/pos");
@@ -63,10 +68,12 @@ public class FileParser {
 			String line = reader.readLine();
 			String newLine = "";
 			while (line != null) {
+				line = tagger.tag(line);
 				StringTokenizer tokenizer = new StringTokenizer(line);
 				while (tokenizer.hasMoreTokens()) {
 					String word = tokenizer.nextToken();
-					word = negate(word);
+					String [] parts = word.split("_");
+					word = negate(parts[0]) + "_" + parts[1];
 					newLine += word + " ";
 				}
 				writer.append(newLine);
