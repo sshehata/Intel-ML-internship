@@ -73,7 +73,7 @@ public class SVMModel implements Runnable {
 
 	public void evaluate(RapidMinerInterface rapidminer) {
 		// Evaluate the current model
-		System.out.print("Evaluating the model..");
+		System.out.print("Evaluating the model..\n");
 		ArrayList<File> testingFiles = loadFiles();
 		double percentage = 0;
 		for (File file : testingFiles) {

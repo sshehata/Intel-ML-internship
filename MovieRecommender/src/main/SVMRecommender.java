@@ -75,7 +75,6 @@ public class SVMRecommender {
 	}
 	
 	private static void close(){
-		
 		fileParser.close();
 	}
 }
