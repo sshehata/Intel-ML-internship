@@ -95,6 +95,7 @@ public class FileParser {
 			FileWriter outStream = new FileWriter(outFile);
 			BufferedWriter writer = new BufferedWriter(outStream);
 
+			lexicon.reset();
 			String line = reader.readLine();
 			String newLine = "";
 			while (line != null) {
@@ -102,16 +103,17 @@ public class FileParser {
 				StringTokenizer tokenizer = new StringTokenizer(line);
 				while (tokenizer.hasMoreTokens()) {
 					String word = tokenizer.nextToken();
+					lexicon.updateRating(word);
 					String [] parts = word.split("_");
-					String tag = evaluate(parts);
 					word = negate(parts[0]) + "_" + parts[1];
-					newLine += word + " " + tag;
+					newLine += word + " ";
 				}
 				writer.append(newLine);
 				writer.newLine();
 				newLine = "";
 				line = reader.readLine();
 			}
+			writer.append(lexicon.getTag());
 			reader.close();
 			writer.flush();
 			writer.close();
@@ -123,28 +125,6 @@ public class FileParser {
 			System.out.println(e);
 			return null;
 		}
-	}
-	
-	private String evaluate(String [] parts){
-		String pos = "";
-		String word = parts[0];
-		
-		if (parts[1].contains("JJ"))
-			pos = "a";
-		else if (parts[1].contains("NN"))
-			pos = "n";
-		else if (parts[1].contains("VB"))
-			pos = "v";
-		else if (parts[1].contains("RB"))
-			pos = "r";
-		
-		double value = lexicon.extract(parts[0], pos);
-		if (value > 0)
-			return "positive ";
-		else if (value < 0)
-			return "negative ";
-		else
-			return "";
 	}
 	
 	private String negate(String word) {
