@@ -11,6 +11,7 @@ import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
 import com.rapidminer.gui.look.painters.DeterminateProgressBarPainter;
+import com.rapidminer.operator.text.io.tokenizer.StringTokenizerOperator;
 
 import edu.uci.ics.jung.algorithms.shortestpath.BFSDistanceLabeler;
 
@@ -97,6 +98,7 @@ public class FileParser {
 
 			lexicon.reset();
 			String line = reader.readLine();
+			String taggedLine = "";
 			String newLine = "";
 			while (line != null) {
 				line = tagger.tag(line);
@@ -104,8 +106,7 @@ public class FileParser {
 				while (tokenizer.hasMoreTokens()) {
 					String word = tokenizer.nextToken();
 					lexicon.updateRating(word);
-					String [] parts = word.split("_");
-					word = negate(parts[0]) + "_" + parts[1];
+					word = negate(word.split("_")[0]);
 					newLine += word + " ";
 				}
 				writer.append(newLine);
