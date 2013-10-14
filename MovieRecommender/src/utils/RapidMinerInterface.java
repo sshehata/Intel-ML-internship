@@ -34,7 +34,6 @@ public class RapidMinerInterface {
 		RapidMiner.init();
 		try {
 			cleaningTrainingData = new Process(new File(trainingDataConfig));
-			findTrainingData();
 			cleaningFile = new Process(new File(classifyConfig));
 			System.out.println(cleaningTrainingData
 				.getOperator("Process Documents from Files").getParameter("pos"));
