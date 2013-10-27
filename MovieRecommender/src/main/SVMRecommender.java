@@ -20,7 +20,7 @@ import com.rapidminer.example.set.SimpleExampleSet;
 
 public class SVMRecommender {
 	private static SVMModel model;
-	private static RapidMinerInterface rapidminer;
+	public static RapidMinerInterface rapidminer;
 	private static Frame frame;
 	private static FileParser fileParser;
 

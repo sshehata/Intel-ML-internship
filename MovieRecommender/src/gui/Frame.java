@@ -9,7 +9,10 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import utils.TweetCollector;
 import main.SVMRecommender;
 
 @SuppressWarnings("serial")
@@ -85,10 +88,27 @@ public class Frame extends JFrame {
 										});
 									}
 								});
+								
 							}
 						});
 					}
 				});
+				
+				add(new JMenuItem("Get Tweets From Twitter") {
+					{
+						addActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(
+									ActionEvent arg0) {
+								String searchKeyword = JOptionPane.showInputDialog("Enter a Keyword to search for.");
+								TweetCollector tweety = new TweetCollector();
+								tweety.gatherTweets(searchKeyword);
+							}
+						});
+					}
+				});
+				
 			}
 		}, BorderLayout.NORTH);
 	}

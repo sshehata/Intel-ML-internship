@@ -16,7 +16,7 @@ import edu.uci.ics.jung.algorithms.shortestpath.BFSDistanceLabeler;
 
 public class FileParser {
 	private boolean negate;
-
+	static int noob = 0;
 	public void parseTrainingData() {
 		File baseDir = new File("resources/training set/pos");
 		File tempDir = new File("resources/temp/training set/pos/");
@@ -60,9 +60,17 @@ public class FileParser {
 			FileWriter outStream = new FileWriter(outFile);
 			BufferedWriter writer = new BufferedWriter(outStream);
 
+			
+			//JazzySpellChecker jazzySpellChecker = new JazzySpellChecker();
+			//Replacer replacer = new Replacer();
+			
 			String line = reader.readLine();
 			String newLine = "";
 			while (line != null) {
+				noob++;
+				System.out.println(noob);
+				//line = replacer.replaceAllWords(line);
+				//line = jazzySpellChecker.getCorrectedLine(line);
 				StringTokenizer tokenizer = new StringTokenizer(line);
 				while (tokenizer.hasMoreTokens()) {
 					String word = tokenizer.nextToken();
