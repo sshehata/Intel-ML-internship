@@ -61,16 +61,14 @@ public class FileParser {
 			BufferedWriter writer = new BufferedWriter(outStream);
 
 			
-			//JazzySpellChecker jazzySpellChecker = new JazzySpellChecker();
-			//Replacer replacer = new Replacer();
+			JazzySpellChecker jazzySpellChecker = new JazzySpellChecker();
+			Replacer replacer = new Replacer();
 			
 			String line = reader.readLine();
 			String newLine = "";
 			while (line != null) {
-				noob++;
-				System.out.println(noob);
-				//line = replacer.replaceAllWords(line);
-				//line = jazzySpellChecker.getCorrectedLine(line);
+				line = replacer.replaceAllWords(line);
+				line = jazzySpellChecker.getCorrectedLine(line);
 				StringTokenizer tokenizer = new StringTokenizer(line);
 				while (tokenizer.hasMoreTokens()) {
 					String word = tokenizer.nextToken();
