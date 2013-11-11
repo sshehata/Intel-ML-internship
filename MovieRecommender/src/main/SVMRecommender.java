@@ -5,57 +5,32 @@
 
 package main;
 
-import java.io.File;
-import java.util.Scanner;
-
-import models.SVMModel;
-import utils.RapidMinerInterface;
-import com.rapidminer.example.set.SimpleExampleSet;
+import gui.Frame;
+import rapidminer.Models;
+import rapidminer.RapidMinerInterface;
+import utils.Parser;
 
 public class SVMRecommender {
-	private static SVMModel model;
-	private static RapidMinerInterface rapidminer;
-	private static int total;
-	private static int pos;
-	private static int neg;
+	public static Frame frame;
+	public static RapidMinerInterface rapidminer;
+	public static Parser parser;
 
 	public static void main(String... args) {
 		init();
-		Scanner sc = new Scanner(System.in);
-		while (true) {
-			System.out.println("\nEnter a file path to classify(q to quit):");
-			String path = sc.nextLine();
-			if (path.equals("q")) {
-				System.out.println("quitting..");
-				break;
-			}
-			File file = new File(path);
-			if (!file.isFile()) {
-				System.out.println(path + ": No such file!");
-				continue;
-			}
-			double label = model.classify(rapidminer.cleanFile(file));
-			if (label > 0) {
-				System.out.println("This review is positive");
-				pos++;
-			} else {
-				System.out.println("This review is negative");
-				neg++;
-			}
-			total++;
-			System.out.println("Total: " + total);
-			System.out.println("Positive: " + pos);
-			System.out.println("Negative:" + neg);
-			System.out.println("Movie score:" + (double) pos / total);
-		}
-		sc.close();
 	}
 
 	public static void init() {
-		rapidminer = new RapidMinerInterface();
-		SimpleExampleSet cleanedData = rapidminer.cleanTrainingData();
-		model = new SVMModel(cleanedData.size());
-		model.train(cleanedData);
-		model.evaluate(rapidminer);
+		frame = new Frame();
+		rapidminer = new RapidMinerInterface(frame.getLogger(),
+				Models.SVM_MODEL);
+		parser = new Parser();
+		parser.parseTrainingData();
+		rapidminer.train();
+		close();
 	}
+	
+	public static void close(){
+		parser.close();
+	}
+
 }

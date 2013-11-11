@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.3.012">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="5.3.012" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="text:create_document" compatibility="5.3.001" expanded="true" height="60" name="Create Document" width="90" x="45" y="75">
+        <parameter key="add label" value="false"/>
+        <parameter key="label_type" value="nominal"/>
+      </operator>
+      <operator activated="true" class="text:process_documents" compatibility="5.3.001" expanded="true" height="94" name="Process Documents" width="90" x="246" y="30">
+        <parameter key="create_word_vector" value="true"/>
+        <parameter key="vector_creation" value="Binary Term Occurrences"/>
+        <parameter key="add_meta_information" value="true"/>
+        <parameter key="keep_text" value="false"/>
+        <parameter key="prune_method" value="none"/>
+        <parameter key="prune_below_percent" value="3.0"/>
+        <parameter key="prune_above_percent" value="30.0"/>
+        <parameter key="prune_below_rank" value="0.05"/>
+        <parameter key="prune_above_rank" value="0.95"/>
+        <parameter key="datamanagement" value="double_sparse_array"/>
+        <process expanded="true">
+          <operator activated="true" class="text:tokenize" compatibility="5.3.001" expanded="true" height="60" name="Tokenize" width="90" x="45" y="30">
+            <parameter key="mode" value="non letters"/>
+            <parameter key="characters" value=".:"/>
+            <parameter key="language" value="English"/>
+            <parameter key="max_token_length" value="3"/>
+          </operator>
+          <operator activated="true" class="text:transform_cases" compatibility="5.3.001" expanded="true" height="60" name="Transform Cases" width="90" x="45" y="120">
+            <parameter key="transform_to" value="lower case"/>
+          </operator>
+          <operator activated="true" class="text:filter_stopwords_english" compatibility="5.3.001" expanded="true" height="60" name="Filter Stopwords (English)" width="90" x="45" y="210"/>
+          <operator activated="true" class="text:filter_by_length" compatibility="5.3.001" expanded="true" height="60" name="Filter Tokens (by Length)" width="90" x="45" y="300">
+            <parameter key="min_chars" value="2"/>
+            <parameter key="max_chars" value="25"/>
+          </operator>
+          <operator activated="true" class="text:stem_porter" compatibility="5.3.001" expanded="true" height="60" name="Stem (Porter)" width="90" x="313" y="30"/>
+          <connect from_port="document" to_op="Tokenize" to_port="document"/>
+          <connect from_op="Tokenize" from_port="document" to_op="Transform Cases" to_port="document"/>
+          <connect from_op="Transform Cases" from_port="document" to_op="Filter Stopwords (English)" to_port="document"/>
+          <connect from_op="Filter Stopwords (English)" from_port="document" to_op="Filter Tokens (by Length)" to_port="document"/>
+          <connect from_op="Filter Tokens (by Length)" from_port="document" to_op="Stem (Porter)" to_port="document"/>
+          <connect from_op="Stem (Porter)" from_port="document" to_port="document 1"/>
+          <portSpacing port="source_document" spacing="0"/>
+          <portSpacing port="sink_document 1" spacing="0"/>
+          <portSpacing port="sink_document 2" spacing="0"/>
+        </process>
+      </operator>
+      <connect from_op="Create Document" from_port="output" to_op="Process Documents" to_port="documents 1"/>
+      <connect from_op="Process Documents" from_port="example set" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>
