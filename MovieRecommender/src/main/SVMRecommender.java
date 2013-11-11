@@ -6,19 +6,14 @@
 package main;
 
 import gui.Frame;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import models.SVMModel;
-import utils.RapidMinerInterface;
-import com.rapidminer.example.set.SimpleExampleSet;
+import rapidminer.Models;
+import rapidminer.RapidMinerInterface;
+import utils.Parser;
 
 public class SVMRecommender {
-	private static SVMModel model;
-	private static RapidMinerInterface rapidminer;
-	private static Frame frame;
+	public static Frame frame;
+	public static RapidMinerInterface rapidminer;
+	public static Parser parser;
 
 	public static void main(String... args) {
 		init();
@@ -27,42 +22,15 @@ public class SVMRecommender {
 	public static void init() {
 		frame = new Frame();
 		rapidminer = new RapidMinerInterface(frame.getLogger(),
-				"resources/config/cleaning_training_data.xml", "resources/config/cleaning_file.xml",
-				"resources/config/cleaning_text.xml");
-		SimpleExampleSet cleanedData = rapidminer.cleanTrainingData();
-		model = new SVMModel(frame.getLogger());
-		model.train(cleanedData);
-		model.evaluate(rapidminer);
+				Models.SVM_MODEL);
+		parser = new Parser();
+		parser.parseTrainingData();
+		rapidminer.train();
+		close();
+	}
+	
+	public static void close(){
+		parser.close();
 	}
 
-	public static void classify(File review) {
-		double result = model.classify(rapidminer.cleanFile(review));
-		frame.getLogger().logReview(review, result > 0);
-		frame.getLogger().updateStats(result > 0);
-	}
-
-	public static void classifyMultiReviews(File selectedFile) {
-		try {
-			FileReader inStream = new FileReader(selectedFile);
-			BufferedReader reader = new BufferedReader(inStream);
-			String line = reader.readLine();
-			String review = "";
-			while (line != null) {
-				if (line.equals("")) {
-					double result = model
-							.classify(rapidminer.cleanText(review));
-					frame.getLogger().logReview(review, result > 0);
-					frame.getLogger().updateStats(result > 0);
-					review = "";
-					line = reader.readLine();
-					continue;
-				}
-				review += line + "\n";
-				line = reader.readLine();
-			}
-			reader.close();
-		} catch (IOException e) {
-			System.out.println(e);
-		}
-	}
 }

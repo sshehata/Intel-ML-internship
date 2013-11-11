@@ -22,22 +22,39 @@ public class Logger {
 		System.setErr(new PrintStream(outStream));
 	}
 
-	public void logReview(File review, boolean pos) {
-		reviewPanel.appendReview(review, pos);
+	public void logReview(File review, int label) {
+		reviewPanel.appendReview(review, label);
+		String categ = "";
+		if (label > 0)
+			categ = "positive";
+		else if (label < 0)
+			categ = "negative";
+		else
+			categ = "neutral";
 		logPanel.appendLine("Review from File " + review.getName()
-				+ " classified as " + ((pos) ? "positive" : "negative"));
+				+ " classified as " + categ);
 		logPanel.appendLine("\n");
 	}
 
-	public void logReview(String review, boolean pos) {
-		reviewPanel.appendReview(review, pos);
-		logPanel.appendLine("Review from Text classified as "
-				+ ((pos) ? "positive" : "negative"));
+	public void logReview(String review, int label) {
+		reviewPanel.appendReview(review, label);
+		String categ = "";
+		if (label > 0)
+			categ = "positive";
+		else if (label < 0)
+			categ = "negative";
+		else
+			categ = "neutral";
+		logPanel.appendLine("Review from Text classified as " + categ);
 		logPanel.appendLine("\n");
 	}
 
-	public void updateStats(boolean pos) {
-		statPanel.updateState(pos);
+	public void updateStats(int label) {
+		statPanel.updateState(label);
+	}
+
+	public void clearStats() {
+		statPanel.clearState();
 	}
 
 	public void clearReviewPane() {

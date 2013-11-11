@@ -24,6 +24,7 @@ public class ReviewPanel extends JPanel {
 	private JTextPane reviewPane;
 	private SimpleAttributeSet posReview;
 	private SimpleAttributeSet negReview;
+	private SimpleAttributeSet neutralReview;
 
 	public ReviewPanel() {
 		setPreferredSize(new Dimension(500, 600));
@@ -42,11 +43,19 @@ public class ReviewPanel extends JPanel {
 		StyleConstants.setForeground(posReview, new Color(34, 139, 34));
 		negReview = new SimpleAttributeSet();
 		StyleConstants.setForeground(negReview, Color.RED);
+		neutralReview = new SimpleAttributeSet();
+		StyleConstants.setForeground(neutralReview, Color.GRAY);
 	}
 
-	public void appendReview(File review, boolean pos) {
+	public void appendReview(File review, int label) {
 		try {
-			SimpleAttributeSet currentSet = (pos) ? posReview : negReview;
+			SimpleAttributeSet currentSet = null;
+			if (label > 0)
+				currentSet = posReview;
+			else if (label < 0)
+				currentSet = negReview;
+			else
+				currentSet = neutralReview;
 			FileReader inStream = new FileReader(review);
 			BufferedReader reader = new BufferedReader(inStream);
 			String line = reader.readLine();
@@ -66,9 +75,15 @@ public class ReviewPanel extends JPanel {
 		}
 	}
 
-	public void appendReview(String review, boolean pos) {
+	public void appendReview(String review, int label) {
 		try {
-			SimpleAttributeSet currentSet = (pos) ? posReview : negReview;
+			SimpleAttributeSet currentSet = null;
+			if (label > 0)
+				currentSet = posReview;
+			else if (label < 0)
+				currentSet = negReview;
+			else
+				currentSet = neutralReview;
 			reviewDoc.insertString(reviewDoc.getLength(), review
 					+ "\n\n#################END OF REVIEW##############\n\n",
 					currentSet);

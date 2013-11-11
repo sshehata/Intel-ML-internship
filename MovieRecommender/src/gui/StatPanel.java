@@ -31,11 +31,11 @@ public class StatPanel extends JPanel {
 		createChart();
 	}
 
-	public void updateState(boolean pos) {
+	public void updateState(int label) {
 		total++;
-		if (pos)
+		if (label > 0)
 			this.pos++;
-		else
+		else if (label < 0)
 			neg++;
 		createChart();
 		repaint();
@@ -45,14 +45,16 @@ public class StatPanel extends JPanel {
 		DefaultPieDataset dataSet = new DefaultPieDataset();
 		dataSet.setValue("positive", (double) pos / total);
 		dataSet.setValue("negative", (double) neg / total);
+		dataSet.setValue("neutral", (double) (total - pos - neg) / total);
 		this.removeAll();
 		JFreeChart chart = ChartFactory.createPieChart("Reviews", dataSet,
 				true, true, false);
 		PiePlot plot = (PiePlot) chart.getPlot();
 		plot.setSectionPaint("positive", new Color(34, 139, 34));
 		plot.setSectionPaint("negative", Color.RED);
+		plot.setSectionPaint("neutral", Color.GRAY);
 		ChartPanel cp = new ChartPanel(chart);
-		cp.setSize(new Dimension(300,300));
+		cp.setSize(new Dimension(300, 300));
 		cp.setLocation(0, 0);
 		add(cp);
 
@@ -69,13 +71,20 @@ public class StatPanel extends JPanel {
 		g.drawString("" + pos, 60, 420);
 		g.setColor(Color.RED);
 		g.drawString("" + neg, 60, 470);
-		g.drawImage(new ImageIcon("resources/images/thumbsup.jpg").getImage(), 20, 400, 30, 30,
-				null);
-		g.drawImage(new ImageIcon("resources/images/thumbsdown.jpg").getImage(), 20, 450, 30,
-				30, null);
+		g.drawImage(new ImageIcon("resources/images/thumbsup.jpg").getImage(),
+				20, 400, 30, 30, null);
+		g.drawImage(
+				new ImageIcon("resources/images/thumbsdown.jpg").getImage(),
+				20, 450, 30, 30, null);
 		g.setColor((pos >= neg) ? new Color(34, 139, 34) : Color.RED);
-		String recommendation = (pos >= neg) ? "We think you should watch this movie."
-				: "You better give this movie a pass!";
+		String recommendation = (pos >= neg) ? "We think you should try this product."
+				: "You better give this product a pass!";
 		g.drawString(recommendation, 20, 520);
+	}
+
+	public void clearState() {
+		pos = neg = total = 0;
+		createChart();
+		repaint();
 	}
 }
