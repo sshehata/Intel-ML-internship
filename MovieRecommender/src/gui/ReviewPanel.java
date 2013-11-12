@@ -84,8 +84,9 @@ public class ReviewPanel extends JPanel {
 				currentSet = negReview;
 			else
 				currentSet = neutralReview;
+			
 			reviewDoc.insertString(reviewDoc.getLength(), review
-					+ "\n\n#################END OF REVIEW##############\n\n",
+					+ "\n\n",
 					currentSet);
 			reviewPane.setCaretPosition(reviewDoc.getLength());
 		} catch (BadLocationException e) {

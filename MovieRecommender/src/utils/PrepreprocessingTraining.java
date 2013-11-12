@@ -12,10 +12,10 @@ import java.util.StringTokenizer;
 public class PrepreprocessingTraining {
 
 	public static void main(String[] args)  {
-		File file = new File("resources/training set/pos");
+		File file = new File("resources/training set/neg");
 		File[] files = file.listFiles();
-		while (files.length > 5000) {
-			for (int i = 0; i < 1000; i++)
+		while (files.length > 2500) {
+			for (int i = 0; i < 500; i++)
 				files[i].delete();
 			files = file.listFiles();
 			System.out.println(files.length);

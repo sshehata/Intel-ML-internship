@@ -64,9 +64,11 @@ public class TweetCollector {
 					//
 					// String spellCheckedTweet = jazzySpellChecker
 					// .getCorrectedLine(noSlangTweet);
+					String text = SVMRecommender.parser.parseText(tweet
+							.getText());
+					if(text == null) continue;
 					String label = SVMRecommender.rapidminer
-							.classify(SVMRecommender.parser.parseText(tweet
-									.getText()));
+							.classify(text);
 					int value = 0;
 					if (label.equals("pos"))
 						value = 1;

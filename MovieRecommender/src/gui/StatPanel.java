@@ -66,7 +66,7 @@ public class StatPanel extends JPanel {
 		g.setFont(new Font("Times New Roman", Font.BOLD, 12));
 		g.drawString("Total Reviews", 125, 430);
 		g.drawString("" + total, 160, 450);
-		g.drawString("This movie got..", 20, 380);
+		g.drawString("This product got ", 20, 380);
 		g.setColor(new Color(34, 139, 34));
 		g.drawString("" + pos, 60, 420);
 		g.setColor(Color.RED);

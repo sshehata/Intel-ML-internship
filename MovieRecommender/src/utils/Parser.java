@@ -11,6 +11,11 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import com.rapidminer.tools.container.Pair;
 import com.rapidminer.tools.jep.function.expressions.text.Replace;
 
+/*
+ * Author: Samy Shihata
+ * Parses text and applies relevant preprocessing
+ */
+
 public class Parser extends Thread {
 	private ConcurrentLinkedQueue<Pair<String, Integer>> writingQueue;
 	private boolean doneParsing;
@@ -20,6 +25,10 @@ public class Parser extends Thread {
 	private Replacer replacer;
 
 	private boolean negate;
+	
+	static String[] spamFilter = {
+		"http"
+	};
 
 	public Parser() {
 		writingQueue = new ConcurrentLinkedQueue<>();
@@ -58,7 +67,20 @@ public class Parser extends Thread {
 		}
 		writingQueue = null; // Free the writing queue when done
 	}
-
+	
+	/*
+	 * Author: Maged Shalaby
+	 * Checks against list of predefined spam words and returns true if any of them are found
+	 */
+	
+	private boolean filterSpam(String line){
+		for(int i=0; i<spamFilter.length; i++)
+			if(line.contains(spamFilter[i])) return true;
+		
+		return false;
+	}
+	
+	
 	public String parseFile(File file) {
 		try {
 			FileReader inStream = new FileReader(file);
@@ -66,6 +88,7 @@ public class Parser extends Thread {
 
 
 			String line = reader.readLine();
+			if(line.contains(":D")) line+= " great";
 			String newLine = "";
 			negate = false;
 			while (line != null) {
@@ -88,10 +111,18 @@ public class Parser extends Thread {
 		}
 	}
 
+	/*
+	 * Author: Samy Shihata
+	 * Returns text of tweet to be classified after preprocessing
+	 * Please merge into parseFile
+	 */
+	
 	public String parseText(String text) {
 		BufferedReader reader = new BufferedReader(new StringReader(text));
 		try {
 			String line = reader.readLine();
+			if(filterSpam(line)) return null;
+			if(line.contains(":D")) line+= " great";
 			String newLine = "";
 			negate = false;
 			while (line != null) {

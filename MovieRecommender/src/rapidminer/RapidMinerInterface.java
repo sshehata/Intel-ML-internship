@@ -34,6 +34,8 @@ public class RapidMinerInterface {
 	private Process classifyingProcess;
 	
 	long start;
+	
+	static double neutralThreshold = 0.1;
 
 	public RapidMinerInterface(Logger logger, String model) {
 		RapidMiner.init();
@@ -77,7 +79,7 @@ public class RapidMinerInterface {
 			double neg = result.getValue(result.getAttributes().get(
 					"confidence_neg"));
 			String label = "";
-			if (Math.abs(pos - neg) > 0.05)
+			if (Math.abs(pos - neg) > neutralThreshold)
 				label = result.getValueAsString(result.getAttributes()
 						.getPredictedLabel());
 			else

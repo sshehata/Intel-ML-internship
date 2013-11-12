@@ -104,6 +104,7 @@ public class Frame extends JFrame {
 										.showInputDialog("Enter a Keyword to search for.");
 								LoadingFrame loading = new LoadingFrame(SVMRecommender.frame);
 								TweetCollector tweety = new TweetCollector(logger);
+								logger.clearReviewPane();
 								tweety.gatherTweets(searchKeyword);
 								loading.dispose();
 							}
@@ -121,6 +122,7 @@ public class Frame extends JFrame {
 
 	private void classifySingleReview(File file) {
 		logger.clearReviewPane();
+
 		String label = SVMRecommender.rapidminer.classify(SVMRecommender.parser
 				.parseFile(file));
 		int value = 0;
@@ -140,6 +142,10 @@ public class Frame extends JFrame {
 			String review = "";
 			while (line != null) {
 				if (line.equals("")) {
+					
+					String text = SVMRecommender.parser.parseText(review);
+					if(text == null) continue;
+					
 					String label = SVMRecommender.rapidminer
 							.classify(SVMRecommender.parser.parseText(review));
 					int value = 0;
